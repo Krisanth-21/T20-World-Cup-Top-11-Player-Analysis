@@ -1,0 +1,93 @@
+Data_Analysis_Project - 26/07
+
+1) IMPORTING REQUIRED PACKAGES:
+
+import pandas as pd
+import json
+  
+
+2) To open JSON file in python:
+
+file_path = 't20_json_files/t20_json_files/t20_wc_match_results.json'
+
+with open(file_path) as f:
+    file_path = json.load(f)
+
+3) Create a DataFrame and print the first five elements & rename scorecard 
+
+df_match = pd.DataFrame(data[0]['matchSummary'])
+df_match.rename(columns={'scorecard': 'match_id'}, inplace = True)
+df_match.head(5)
+
+4) To check how many elements it has
+
+df_match.shape
+
+5) Renaming scorecard as match_id
+
+df_match.rename({'scorecard': 'match_id'}, axis = 1, inplace = True)
+df_match
+
+6) Appending all batting summary into a single array for easy understanding (I'll get all array in single list)
+
+all_records = []
+for record in data:
+    all_records.extend(record['battingSummary'])
+all_records
+
+7) Converting it into a DataFrame
+
+df_batting = pd.DataFrame(all_records)
+
+8) add new column named: out/not_out where the dismissal can be seen as out or not_out
+
+df_batting["out/not_out"] = df_batting.dismissal.apply(lambda x: "out" if len(x) > 0 else "not_out")
+df_batting
+
+9) .apply(lambda x: "out" if len(x) > 0 else "not_out")
+	
+	The lambda function checks if the length of x is greater than 0 to determine if the player is "out" or "not_out".
+
+10) Drop the dismissal column
+
+df_batting = df_batting.drop(columns=['dismissal'], inplace = True)
+df_batting.head(10)
+
+11) Removing special character and checking whether there are any special character i missed inside.
+
+if 'batsmanName' in df_batting.columns:
+        df_batting['batsmanName'] = df_batting['batsmanName'].str.replace('[â€()]', '', regex = True)
+df_batting.iloc[80:120]
+
+12) To get the match id for team1 vs team2 we need to create a dictionary where the **key1 = team1 vs team2 and key2 = team2 vs team1**
+    because we will have USA Vs India in one table and India Vs USA in another table.
+
+match_ids_dictionary = {}
+
+for index, row in df_match.iterrows():
+    key1 = row['team1'] + 'Vs' + row['team2']
+    key2 = row['team2'] + 'Vs' + row['team1']
+
+    match_ids_dictionary[key1] = row['match_id']
+    match_ids_dictionary[key2] = row['match_id']
+
+match_ids_dictionary
+
+13) Now to get the match id we use
+
+match_ids_dictionary['USA Vs Srilanka']
+	output: the match code will display
+
+14) Applying or mapping this match is identified by this id
+
+df_batting['match_id'] = df_batting['match'].map(match_ids_dictionary)
+df_batting.head()
+
+15) 
+    
+
+ 
+
+
+
+
