@@ -6,6 +6,8 @@ Overview:
 
 Tools Used: 
 - Parse Hub, Microsoft Excel, Microsoft Power BI.
+Language Used:
+- Python Programming
 
 Steps in the Analysis:
 - Web Scraping: I used ParseHub to fetch data from the ESPNcricinfo website and converted it into tabular form in Excel. This process was repeated for Batsmen, Bowlers, and match summaries.
