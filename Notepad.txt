@@ -83,9 +83,6 @@ match_ids_dictionary['USA Vs Srilanka']
 df_batting['match_id'] = df_batting['match'].map(match_ids_dictionary)
 df_batting.head()
 
-15) 
-    
-
  
 
 
