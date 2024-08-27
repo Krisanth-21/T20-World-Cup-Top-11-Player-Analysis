@@ -73,7 +73,7 @@ for index, row in df_match.iterrows():
 
 match_ids_dictionary
 
-13) Now to get the match id we use
+13) Now to get the match id we use:
 
 match_ids_dictionary['USA Vs Srilanka']
 	output: the match code will display
